@@ -26,12 +26,12 @@ st.title("FYP-Pulse: Final Year Project Early Warning System")
 st.caption("Uses only what is known at the end of week 8 to flag groups likely to fail or carry over.")
 
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
-    ["A1 · Data Quality", "A2 · Dashboard", "A3 · Models", "A4 · Predict",
-     "A5 · Explain & Fairness", "A6 · Watchlist", "A7 · What-if"])
+    ["Data Quality", "Dashboard", "Models", "Predict",
+     "Explain & Fairness", "Watchlist", "What-if"])
 
 # ------------------------------------------------------------------ A1
 with tab1:
-    st.header("A1 · Data Cleaning & Summary")
+    st.header("Data Cleaning & Summary")
     c = st.columns(5)
     c[0].metric("Initial rows", f"{s['initial_rows']:,}")
     c[1].metric("Cleaned rows", f"{s['clean_rows']:,}", f"-{s['initial_rows'] - s['clean_rows']} duplicates")
@@ -102,7 +102,7 @@ def insight(text):
 
 
 with tab2:
-    st.header("A2 · Dashboards & Visualizations")
+    st.header("Dashboards & Visualizations")
     st.caption("Each bar is the share of groups in that band that failed or carried over. "
                f"Red bars are above the overall rate of {BASE:.0%}. n = number of groups.")
 
@@ -158,7 +158,7 @@ with tab2:
     st.markdown("##### What the engineered features measure")
     for k, v in core.ENGINEERED.items():
         st.markdown(f"- **{core.FRIENDLY[k]}**: {v}")
-    st.caption("Commits per member is charted above. All three engineered features go into the model (A3).")
+    st.caption("Commits per member is charted above. All three engineered features go into the model .")
 
     with st.expander("Extra: the week-8 mid-evaluation"):
         d = rate_by("mid_eval_score", [0, 50, 60, 70, 80, 100], ["< 50", "50-60", "60-70", "70-80", "80+"])
@@ -183,7 +183,7 @@ Xte = test[core.FEATURES_NUM + core.RAW_CAT]
 yte = test["poor_outcome_flag"].values
 
 with tab3:
-    st.header("A3 · Model Training & Selection")
+    st.header("Model Training & Selection")
 
     st.subheader("1 · Columns dropped and why")
     st.dataframe(pd.DataFrame(core.DROPPED, columns=["Column", "Reason", "Explanation"]), hide_index=True, width="stretch")
@@ -283,7 +283,7 @@ def badge(tier, p):
 
 # ------------------------------------------------------------------ A4
 with tab4:
-    st.header("A4 · Prediction Form")
+    st.header("Prediction Form")
     with st.container(border=True):
         e1, e2, e3 = st.columns([1, 2, 1])
         tier_pick = e1.radio("Load an example test group", TIERS[::-1], horizontal=True, key="ex_tier")
@@ -327,7 +327,7 @@ with tab4:
 
 # ------------------------------------------------------------------ A5
 with tab5:
-    st.header("A5 · Explainability (group in the A4 form)")
+    st.header("Explainability (group in the A4 form)")
     prob, ex = core.explain(MODEL, row, REF)
     text, action = core.narrative(prob, tier, ex)
     st.markdown(badge(tier, prob), unsafe_allow_html=True)
@@ -344,7 +344,7 @@ with tab5:
     r5.info(f"**Suggested support step:** {action}")
 
     st.divider()
-    st.header("A5 · Fairness check (test split)")
+    st.header("Fairness check (test split)")
 
     def ftable(col, min_n=0):
         rows = []
@@ -380,7 +380,7 @@ with tab5:
 
 # ------------------------------------------------------------------ A6
 with tab6:
-    st.header("A6 · Weekly Watchlist")
+    st.header("Weekly Watchlist")
     K = st.slider("Coordinator capacity K", 10, 100, 30)
     top6 = core.watchlist(test, MODEL, REF, K)
     caught, base_rate = int(top6["poor_outcome_flag"].sum()), test["poor_outcome_flag"].mean()
@@ -394,7 +394,7 @@ with tab6:
 
 # ------------------------------------------------------------------ A7
 with tab7:
-    st.header("A7 · What-if Simulator (group in the A4 form)")
+    st.header("What-if Simulator (group in the A4 form)")
     st.warning("The model shows **association, not a guaranteed effect** of the change.")
     new = dict(row)
     lc = st.columns(len(core.LEVERS))
