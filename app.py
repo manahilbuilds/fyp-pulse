@@ -327,7 +327,7 @@ with tab4:
 
 # ------------------------------------------------------------------ A5
 with tab5:
-    st.header("Explainability (group in the A4 form)")
+    st.header("Explainability (group in the Predict tab)")
     prob, ex = core.explain(MODEL, row, REF)
     text, action = core.narrative(prob, tier, ex)
     st.markdown(badge(tier, prob), unsafe_allow_html=True)
@@ -394,7 +394,7 @@ with tab6:
 
 # ------------------------------------------------------------------ A7
 with tab7:
-    st.header("What-if Simulator (group in the A4 form)")
+    st.header("What-if Simulator (group in the Predict tab)")
     st.warning("The model shows **association, not a guaranteed effect** of the change.")
     new = dict(row)
     lc = st.columns(len(core.LEVERS))
