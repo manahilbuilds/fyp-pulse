@@ -4,6 +4,15 @@ import core
 
 st.set_page_config(page_title="FYP-Pulse", page_icon="📊", layout="wide")
 
+st.markdown("""<style>
+h1 {background: linear-gradient(90deg,#4F46E5,#DB2777); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+[data-testid="stMetric"] {background:#FFFFFF; border:1px solid #E0E7FF; border-left:5px solid #4F46E5; border-radius:12px; padding:12px 16px; box-shadow:0 1px 3px rgba(79,70,229,.08);}
+.stTabs [data-baseweb="tab-list"] {gap:6px;}
+.stTabs [data-baseweb="tab"] {background:#EEF2FF; border-radius:10px 10px 0 0; padding:8px 14px; font-weight:600;}
+.stTabs [aria-selected="true"] {background:#4F46E5 !important; color:#FFFFFF !important;}
+h2, h3 {color:#3730A3;}
+</style>""", unsafe_allow_html=True)
+
 
 @st.cache_data
 def load():
